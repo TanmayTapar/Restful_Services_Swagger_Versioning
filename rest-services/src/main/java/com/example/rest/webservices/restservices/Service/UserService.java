@@ -1,13 +1,17 @@
-package com.example.rest.webservices.restservices.Dao;
+package com.example.rest.webservices.restservices.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
-import com.example.rest.webservices.restservices.entity.User;
+
+import com.example.rest.webservices.restservices.Entity.User;
+
+
 @Component
-public class UserDao {
+public class UserService {
 	private static List<User> users = new ArrayList<>();
 	static{
 		users.add(new User(1,"Jon", new Date()));
@@ -33,6 +37,19 @@ public class UserDao {
 				return user;
 			}
 		}
+		return null;
+	}
+	
+	public User deleteById(int id){
+		Iterator<User> iterator= users.iterator();
+		while(iterator.hasNext()){
+			User user= iterator.next();
+			if(user.getId()==id){
+				iterator.remove();
+				return user;
+			}
+		}
+	
 		return null;
 	}
 	
