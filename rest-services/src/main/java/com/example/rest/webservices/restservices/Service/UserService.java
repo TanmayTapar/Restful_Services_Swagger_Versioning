@@ -5,13 +5,17 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.rest.webservices.restservices.DAO.UserDAO;
 import com.example.rest.webservices.restservices.Entity.User;
 
 
 @Component
 public class UserService {
+	@Autowired
+	private UserDAO userDAO;
 	private static List<User> users = new ArrayList<>();
 	static{
 		users.add(new User(1,"Jon", new Date()));
@@ -19,38 +23,27 @@ public class UserService {
 		users.add(new User(3,"Tyrion", new Date()));
 	}
 	private static int userCount=3;
+	
 	public List<User> findAll(){
-		return users;
+		return userDAO.findAll();
 	}
 	
 	public User save(User user){
-		if(user.getId()== null){
-			user.setId(++userCount);
-		}
-		users.add(user);
+		
+		userDAO.save(user);
 		return user;
 	}
 	
 	public User findOne(int id){
-		for(User user:users){
-			if(user.getId()==id){
-				return user;
-			}
+		User user= userDAO.findOne(id);
+		if(user!=null){
+			return user;
 		}
 		return null;
 	}
 	
-	public User deleteById(int id){
-		Iterator<User> iterator= users.iterator();
-		while(iterator.hasNext()){
-			User user= iterator.next();
-			if(user.getId()==id){
-				iterator.remove();
-				return user;
-			}
-		}
-	
-		return null;
+	public void deleteById(int id){
+		userDAO.delete(id);
 	}
 	
 }

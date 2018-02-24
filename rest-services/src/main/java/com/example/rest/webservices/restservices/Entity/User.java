@@ -2,14 +2,19 @@ package com.example.rest.webservices.restservices.Entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description= "All Info about User")
+@Entity
 public class User {
-	
+	@Id
+	@GeneratedValue
 	private Integer id;
 	
 	@Size(min=2,message="Name should have atleast 2 characters")
